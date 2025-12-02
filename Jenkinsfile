@@ -12,13 +12,13 @@ pipeline {
   stages {
     stage("Checkout") {
       steps {
-        git url: "https://github.com/iam-ganeshjadhav/Jarvis-Desktop-Voice-Assistant-Project.git", branch: "main"
+        git url: "https://github.com/abhigiri07/Jarvis-Desktop-Voice-Assistant-Project.git", branch: "main"
       }
     }
 
     stage("Deploy to EC2") {
       steps {
-        sshagent(['node-key']) {
+        sshagent(['jenkins-key']) {
           sh '''
           ssh -o StrictHostKeyChecking=no ubuntu@52.91.244.151 "echo Connected"
           rsync -avz --delete --exclude venv . ${TARGET}:/opt/jarvis
