@@ -13,9 +13,7 @@ pipeline {
 
     stage("Checkout") {
       steps {
-        git credentialsId: 'github_pat',
-            url: 'https://github.com/abhigiri07/Jarvis-Desktop-Voice-Assistant.git',
-            branch: 'main'
+           git url: 'https://github.com/abhigiri07/Jarvis-Desktop-Voice-Assistant.git', branch: 'main'
       }
     }
 
