@@ -10,10 +10,11 @@ pipeline {
   }
 
   stages {
+
     stage("Checkout") {
       steps {
-         git credentialsId: 'github_pat',
-            url: 'https://github.com/abhigiri07/Jarvis-Desktop-Voice-Assistant-Project.git',
+        git credentialsId: 'github_pat',
+            url: 'https://github.com/abhigiri07/Jarvis-Desktop-Voice-Assistant.git',
             branch: 'main'
       }
     }
@@ -22,9 +23,16 @@ pipeline {
       steps {
         sshagent(['jenkins-key']) {
           sh '''
-          ssh -o StrictHostKeyChecking=no ubuntu@52.91.244.151 "echo Connected"
-          rsync -avz --delete --exclude venv . ${TARGET}:/opt/jarvis
-          ssh ${TARGET} "sudo systemctl restart jarvis"
+            echo ">>> Connecting to EC2..."
+            ssh -o StrictHostKeyChecking=no ${TARGET} "echo Connected"
+
+            echo ">>> Syncing project to /opt/jarvis..."
+            rsync -avz --delete --exclude venv . ${TARGET}:/opt/jarvis
+
+            echo ">>> Restarting service..."
+            ssh ${TARGET} "sudo systemctl restart jarvis"
+
+            echo ">>> Deployment complete!"
           '''
         }
       }
