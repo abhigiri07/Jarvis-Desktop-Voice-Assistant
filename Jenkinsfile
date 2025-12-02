@@ -21,7 +21,7 @@ pipeline {
 
     stage("Deploy to EC2") {
       steps {
-        sshagent(['node-app-key']) {
+        sshagent(['new-key']) {
           sh '''
             echo ">>> Connecting to EC2..."
             ssh -o StrictHostKeyChecking=no ${TARGET} "echo Connected"
