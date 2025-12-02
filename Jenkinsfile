@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    TARGET = "ubuntu@3.94.162.152"
+    TARGET = "ubuntu@52.90.172.80"
   }
 
   triggers {
@@ -22,7 +22,7 @@ pipeline {
         sshagent(['new-key']) {
           sh '''
             echo ">>> Connecting to EC2..."
-            ssh -o StrictHostKeyChecking=no ubuntu@3.94.162.152 "echo Connected"
+            ssh -o StrictHostKeyChecking=no ubuntu@52.90.172.80 "echo Connected"
 
             echo ">>> Syncing project to /opt/jarvis..."
             rsync -avz --delete --exclude venv . ${TARGET}:/opt/jarvis
